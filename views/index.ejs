@@ -1,0 +1,43 @@
+
+<%- include('partials/header.ejs'); %>
+<body class="white">
+    <%- include('partials/navbar.ejs');  %>
+    
+    <div class="corpo bggrey"  >
+        <div class="corpocentro padding30 margin30 shadow corwhite" >
+        <div >
+            <h2>Fenda Ateu Dispor</h2>
+            <br><br><br>
+            <h3>Olá!</h3> 
+                <h3>Bom dia, Boa Tarde, ou Boa Noite!!</h3>
+                <br>
+                <h3>Estou mudando o sistema de Contas, serei mais restrito e mais criterioso.</h3>
+                <h3>À partir de agora, contas terão limites préviamente tratados, e caso</h3>
+                <h3>não aconteça o pagamento dentro do período de prazo estimado este limite</h3>
+                <h3>terá seu valor decrementado dentro de uma função matemática criada por nós</h3>
+                <h3>da Mercearia JLAlmeida. </h3>
+                <h3>O Prazo limite de pagamento é de 1 mês e 10 dias, caso não haver algum pagamento</h3>
+                <h3>ou uma explicação plauzível, a conta será bloqueada (não podendo fazer mais compras à prazo</h3>
+                <h3>e seu limite decrementado conforme a função).</h3>
+                <h3>Os limites poderão aumentar conforme os pagamentos realizados corretamente, logo,</h3>
+                <h3>tenha em mente sua data de prazo.</h3>
+                <br>
+                <h3>O motivo pelo qual estamos realizando estas mudanças é que nos encontramos passando por</h3> 
+                <h3>problemas financeiros devido à falta de compromisso de nossos clientes com o pagamento em dia.</h3>
+                <br>
+                <h3>Espero q entenda.</h3>
+                <br>
+                <h3>Se não conseguir entender, sinto muito, fique sem entender.</h3>
+        </div>
+        <div id="vData"></div>
+        <script>
+            fetch('http://localhost:8080/fetch')
+                .then(r => r.json()
+                .then(r=> console.log(r.data)
+            ));
+        </script>
+    </div>
+    </div>
+   
+</body>
+<%- include('partials/footer.ejs'); %>

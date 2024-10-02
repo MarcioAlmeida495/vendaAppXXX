@@ -1,0 +1,17 @@
+<%- include('partials/header.ejs'); %>
+<body>
+    <%- include('partials/navbar.ejs')%>
+    <div class="corpo bggrey" >
+        <div class="corpocentro padding30 margin30 shadow corwhite" >
+            <h2 class="espacado">Dados novo cliente:</h2>
+            <form method="post" action="/salvarcliente"> 
+                <input class="input" type="text" placeholder="Nome" name="nome" id="">
+                <input class="input" type="number" placeholder="CPF" name="cpf" id="">
+                <input class="input" type="number" placeholder="Telefone/Celular">
+                <button class="btn" >Adicionar</button>
+            </form>
+        </div>    
+    </div>    
+    
+</body>
+<%- include('partials/footer.ejs')%>

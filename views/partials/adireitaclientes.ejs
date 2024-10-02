@@ -1,0 +1,136 @@
+<div class="corwhite adireita" style="height: 100%;">
+    <div class="estendida bggrey" style="width: 100%; box-sizing: border-box;" >
+        <form action="/openeditor" method="post">
+            <textarea name="nome" style="display: none;"><%try{%><%=nome%><%}catch{}%></textarea>
+            <button id="togglebutton" style="float: left; border: 2px solid black;">Toggle Editor</button> 
+            
+        </form>  
+        <%try{%>  
+            <%=nome%>
+        <%}catch{}%>
+        
+    </div>
+    <div  class="rxpai peqtam estendidav" id="corpo" style=" height: 90%; width: 250px;" >
+            
+        <%try{%>
+            <%if(!edit){%>
+                <% dadostxt.forEach((linha)=>{%>
+                    <%if(linha.length>0){%>
+                        
+                        <h4 class="bggrey espacado txtesq corwhite"><%=linha%></h4>
+                        
+                    <%}else{%>
+                        <h4 class="margin5 txtesq"><%=linha%></h4>
+                    <%}%>
+                            
+                <%})%>
+            <%}else{%>
+                <form action="/edicoes" method="post" style="height: 90%;">
+                    <textarea onkeypress="enterpressed(event, 'editionsbutton')" name="edicoes"  id="edicoes" class="edicoes" style="overflow: scroll; cursor: text; height: 100%;"  ><%dadostxt.forEach((linha)=>{%><%if(false){%><%}else{%>
+<%=linha%><%}%><%})%></textarea>
+                    <textarea  name="nome" id="" style="display: none;"><%try{%><%=nome%><%}catch{}%></textarea>
+                    <button id="editionsbutton" style="width: 90%;">Realizar Edições</button>
+                </form> 
+                
+               
+
+            <%}%>   
+            
+
+        <%}catch{}%> 
+         
+        <!--<textarea class="vendas" name="" id="" > <%try{%>    <%=dadostxt%> <%}catch{}%></textarea>-->
+    </div>
+    <div class=" espacado flesq tam25">
+            <%if(nome){%>
+                
+            <form class="flesq tam25" method="post" action="/realcompra">
+                    <div class="bggrey input flesq centro espacado  tam25">VALOR TOTAL : <%try{%><%=total%><%}catch{}%></div><textarea name="nome" style="display: none;" type="text"><%try{%><%=nome%><%}catch{}%></textarea>
+                    <!-- <input autocomplete="off" onkeyup="presskey(event)" onkeydown="enterpressed(event)" class=" tam25 centro espacado input" type="text" name="compra"   placeholder="compra"> -->
+                    <textarea onkeydown="enterpressed(event, 'buybutton')" id="mytxtarea" autocomplete="off" onkeyup="presskey(event)"  class=" tam25 centro espacado input" type="text" name="compra"   placeholder="compra"></textarea>
+                        <div id="valorcompra" style="color: black; background-color: rgb(75, 75, 77); font-weight: bold; color: white" class="bggrey input flesq centro espacado  tam25">
+                        Valor da Compra: 0,00
+                    </div>
+                    <button id="buybutton" class="btn">Realizar Compra</button>
+            </form>
+            <form action="/realpagamento" method="post">
+                    <textarea name="nome" style="display: none;" type="text"><%try{%><%=nome%><%}catch{}%></textarea>
+                    <input  class=" tam25 centro espacado input" type="text" name="pagamento"   placeholder="Valor a quitar">  
+                    <button class="btn">Realizar Pagamento</button>
+                    
+            </form>
+            <%}%>
+            <!-- <div style="color: black">
+                valor total:
+                <div id="valorcompra"></div>
+            </div> -->
+    </div>
+    <script>
+        var sumEnters = 0;
+        const iddiv = 'corpo'
+        function link(){
+            var txtin = document.getElementById(iddiv).innerHTML;
+            txtin.replaceAll('#link', '<a>');
+                document.getElementById(iddiv).innerHTML = txtin;
+                console.log(txtin)
+        }
+        link()
+        
+        function getFocus(elemento){
+            document.getElementById(elemento).focus();
+        }
+        getFocus('mytxtarea')
+        function sum(string){
+            // console.log(string);
+            var sumCompra = 0.00;
+            string = string.replaceAll(',', '.');
+            string = string.replaceAll('\n', ' ');
+            console.log(string)
+            var words = string.split(' ');
+            console.log(words);
+            for(var i = 0; i< words.length; i++){
+                if(!isNaN(words[i]) && words[i].includes('.'))sumCompra += parseFloat(words[i]);
+            }
+            document.getElementById('valorcompra').innerHTML = 'Valor da Compra: '+ sumCompra.toFixed(2);
+        }
+        var cntrlcount = 0;
+        const alteratefocus = 'mytxtarea';
+        const alteratefocus2 = 'busca';
+        var atual = 'mytxtarea';
+        function presskey(event){
+            console.log(event.keyCode)
+            
+            if(event.keyCode === 17){
+                cntrlcount++;
+                console.log(cntrlcount)
+            }else{
+                cntrlcount = 0;
+            }
+            if(cntrlcount >= 2){
+                console.log('testaaando');
+                getFocus(alteratefocus2)
+                
+            }
+            var string = event.target.value;
+            //console.log(event.target.value);
+            sum(string);
+        }
+        function enterpressed(event, button){
+            if(event.keyCode === 13 && sumEnters == 1){
+                document.getElementById(button).click();
+            }else if(event.keyCode === 13){
+                
+                //document.getElementById('valorcompra').innerHTML = 'Valor da Compra: 10,00'
+                sumEnters++;
+                //event.preventDefault();
+            }else sumEnters = 0;
+            //console.log(event.target.value);
+        }
+        var vertical = document.getElementById("corpo");
+        if(vertical)vertical.scrollTop = vertical.scrollHeight;
+
+        var vertcross = document.getElementById("edicoes");
+        if(vertcross)vertcross.scrollTop = vertcross.scrollHeight;
+
+    </script>
+</div>

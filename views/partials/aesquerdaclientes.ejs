@@ -1,0 +1,74 @@
+<!--
+<div class="aesquerda">
+    <h1>Clientes</h1>
+    <%try{%>
+    <hr>
+    <form method="post" action="/busca">
+        <input class="input" placeholder="Busca" type="text" name="busca">
+    </form>
+    <%linkvalores.forEach((valor)=>{%> 
+        <hr>
+        <a class="itens" href=<%=valor.links%> name=<%=valor.links%>><%=valor.nome%></a>
+    <%})%>
+    <%}catch{%>
+        <h3>erro ao carregar dados</h3>
+    <%}%>
+     
+</div>  
+-->
+
+<div class="aesquerda">
+    <a class="itens" href="/addCliente.ejs">ADD CLIENTE</a>
+    <a class="itens" id="fiadohoje">FIADO</a>
+    <a class="itens" href="/diario">HOJE</a>
+    <%try{%>
+    <hr>
+    <form method="post" action="/busca">
+        <input  class="input" autocomplete="off" id="busca" placeholder="Realizar Busca" type="text" name="busca">
+    </form>
+
+    <%ldados.forEach((valor)=>{%> 
+        
+        <a class="itens" href=<%=valor.link%> name=<%=valor.link%>><%=valor.nome%></a>
+    <%})%>
+    
+    <%}catch{%>
+        <h3>erro ao carregar dados</h3>
+    <%}%>
+     <script>
+        function getDMY(){
+            var d = new Date();
+            var dia = d.getDate(); + "-"  + d.getFullYear();
+            var mes = d.getMonth() + 1;
+            if(mes<10)mes = "0" + mes.toString();
+            var ano = d.getFullYear();
+            ano = ano % 1000;
+            
+            var data = dia +"-"+ mes +"-"+ ano;
+            return data; 
+        }
+         const fiadohjid = 'fiadohoje';
+         function fiadohj(){
+            var date = getDMY();
+            document.getElementById(fiadohjid).setAttribute('href', date + '-fiado');
+         }
+         fiadohj();
+         var txtbusca = "";
+         document.getElementById('busca').onkeyup = () =>{
+            var key = event.target.value;
+            txtbusca = key.toUpperCase();
+            console.log(key);
+            var clientes = document.getElementsByClassName("itens");
+            for(var i = 0; i<clientes.length; i++){
+                //console.log(clientes[i].innerHTML);
+                if(!clientes[i].innerHTML.includes(txtbusca) && !clientes[i].innerHTML.includes('HOJE') && !clientes[i].innerHTML.includes('ADD CLIENTE')){
+                    clientes[i].setAttribute('style','display: none');
+                }else{
+                    clientes[i].setAttribute('style','display: block')
+                };
+            }
+
+
+         }
+     </script>
+</div>

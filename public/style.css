@@ -1,0 +1,371 @@
+*{
+    cursor: default;
+
+}
+button{
+    background-color: #505050;
+    padding: 3px;
+    color: #ddd;
+    border: 1px solid black;
+    cursor: pointer;
+
+}
+button:hover{
+    background-color: #303030;
+}
+
+*::-webkit-scrollbar {
+    width: 10px; 
+    height: 0px;             /* width of the entire scrollbar */
+  }
+
+  
+  *::-webkit-scrollbar-track {
+    background: #505050;        /* color of the tracking area */
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: white;    /* color of the scroll thumb */
+    border-radius: 1px;       /* roundness of the scroll thumb */
+    border: 1px solid #202020;  /* creates padding around scroll thumb */
+  }
+
+*{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 100;
+    margin: 0px;
+    box-sizing: border-box;
+    border-radius: 1px;
+}
+.margin30{
+    margin: 90px;
+}
+.shadow{
+    box-shadow: 2px 2px 20px black;
+}
+.rxpai{
+    overflow: scroll;
+}
+.divcorpobranco{
+    margin: 10px 10%; 
+}
+.edicoes{
+    width: 90%;
+    height: 700px;
+}
+@media ((max-width:700px)) {
+    .edicoes{
+        width: 350px;
+        height: 200px;
+    }
+}
+.input{
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+    padding: 10px 2px;
+    margin: 5px 1px;
+}
+.input:hover{
+    cursor: text;
+    background-color: black;
+    color: white;
+    transition: 0.3s;
+}
+.bggrey{
+    background-color: #202020;
+    color: white;
+}
+.corblack{
+    background-color: black;
+}
+.corwhite{
+    color: white;
+}
+.flesq{
+    float: left;
+}
+.adireita{
+    height: 100%;
+    margin: 0px;
+    background-color: #ddd;
+    float:right;
+    width: calc(100% - 170px);
+    
+    box-shadow: 2px 2px 2px black;
+}
+
+.peqtam{
+    float: left;
+    margin: 10px 20px;
+    width: 500px;
+    overflow: auto;
+    height: 90%;
+}
+@media (max-width:1500px){
+    .peqtam{
+        margin: 10px 20px;
+        width:300px;
+    }
+}
+.medtam{
+    padding: 40px;
+    float: right;
+    width: 60%;
+    height: 800px;
+    margin: 10px 300px;
+}
+.espacado{
+    margin: 3px;
+}
+
+.centro{
+    padding: 10px;
+}
+.fonte40{
+    font-size: 40px;
+}
+.fonte30{
+    font-size: 30px;
+}
+.fonte20{
+    font-size: 20px;
+}
+.fldir{
+    float: right;
+}
+.vendas{
+    margin: 5px 20px; 
+
+    float: left;
+    height: 600px;
+    width: 70%;
+}
+
+.white{
+    background-color:white;
+}
+body{
+    background-color:#aab;
+    height: max-content;
+}
+
+#form-perguntas{
+    margin-top: 2%;
+}
+
+.scale11{
+    float:left;
+}
+.aesquerda{
+    position: absolute;
+    background-color: white;
+    height: 100%;
+    font-size: 0.9em;
+    float: left;
+    width: 170px;
+    box-shadow: 2px 2px 2px black;
+    overflow: scroll;
+    border: 1px solid #ddd;
+}
+
+/*NAV BAR */
+.navbar{
+    float: none;
+    margin: 0px;
+    width: 100%;
+    height: 50px;
+    background-color: black;
+}
+.navbar h1{
+    font-size: 1.5em;
+    float: right;
+}
+.itemTabela{
+    text-align: center;
+    margin: 10px 10px ;
+    color: white;
+    
+    cursor: pointer;
+}
+.margin5{
+    margin: 5px;;
+}
+.margin10{
+    margin: 10px;;
+}
+.bordeado{
+    border-radius: 0px;
+}
+.tam30{
+    width: 300px;
+}
+.tam25{
+    width: 260px;
+}
+.tam20{
+    width: 200px;
+}
+a{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    height: 30px;
+    padding: 0px 10px;
+}
+a:hover{
+    background-color: black;
+    color: white;
+}
+.itemTabela img{
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    cursor: pointer;
+}
+.login{
+    width: 30%;
+    margin: 10px 30%;
+}
+.btn{
+    margin: 3px;
+    font-size: 17px;
+    border: solid black 1px;
+    border-radius: 1px;
+    background-color:#505070;
+    color: #ddd;
+    width: 100%;
+    height: 60px;
+}
+.btn:hover{
+    font-size: 22px;
+    background: #505050;
+    cursor: pointer;
+    transition: 00.3s;
+    color: white;
+}
+.estendida{
+    width: 98%;
+    padding: 10px;
+}
+.itens{
+    float: left;
+    width: 100%;
+    margin: 0px;
+    padding: 10px 5px;
+    font-size: 0.8em;
+    font-weight: 900;
+    text-decoration: none;
+    color: black;
+    border: 1px solid black; 
+    overflow:hidden;
+}
+.itens:hover{
+    background-color: black;
+    color: white;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.itemTabela:hover{
+    text-decoration: dashed;
+    transform: scale(1.3);
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+.estendidav{
+    padding: 2px;
+    height: 90%;
+    box-shadow: 1px 1px 1px black;
+}
+.tamv80{
+    height: 80%;
+}
+.txtesq{
+    text-align: left;
+    padding: 1px 5px;
+}
+.padding30{
+    padding: 30px;
+}
+
+.corpo{
+    position: absolute;
+    box-shadow: 2px 2px 20px black ;
+    overflow: auto;
+    height: 90%;
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+}
+@media (max-width: 800px){
+    
+    .peqtam{
+        width: 270px;
+        height: 68%;
+        margin: 10px;
+    }
+}
+
+.linkmar{
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+@media (max-width: 1200px){
+    *{
+        margin:0px;
+    }
+    .aesquerda{
+        float:left;
+        width: 130px;
+        margin:0px;
+        font-size: 0.8em;
+    }
+    .adireita{
+        float: right;
+        margin: 0px;
+        width: calc(100% - 160px);
+    }
+    
+    .desligaliga{
+        display: none;
+    }
+   
+    .corpo{
+        margin:10px 0px;
+        width: 100%;
+    }
+}
+@media (max-width: 700px){
+    *{
+        margin: 0px;
+    }
+    .margin30{
+        margin: 30px;
+    }
+    .corpo{
+        margin-top: 5px;
+        overflow: auto;
+        height: max-content;
+        height: 93%;
+    }
+    .navbar{
+        height: 40px;
+    }
+    .itemTabela{
+        height: 30px;
+        width: 30px;
+        margin: 5px;
+        padding: 0px;
+    }
+    .adireita{
+        margin: 0px;
+        width: calc(100% - 130px);
+        overflow: auto;
+    }
+
+}
+.login{
+    width: 30%;
+    margin: 10px 30%;
+}
