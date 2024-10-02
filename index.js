@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port  = 8080;
+const port  = 80;
 const cors = require('cors');
 app.use(cors());
 console.log("rodando em : " + port)
