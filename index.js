@@ -1,21 +1,22 @@
+//const functions = require('./API');
 const express = require('express');
 const app = express();
 const port  = 8080;
 const cors = require('cors');
 app.use(cors());
-console.log("rodando em : " + port)
-
+console.log("rodando em : " + port);
 app.listen(port, ()=>{console.log('rodando')});
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+module.exports = app;
 const arquivos = require('fs');
 const { text } = require('body-parser');
 const { redirect } = require('express/lib/response');
+const { required } = require('nodemon/lib/config');
 //const res = require('express/lib/response');
 var linkvalores;
 var auxdiretorio = "Marcio Almeida";
@@ -371,6 +372,7 @@ var quebraspace = (texto)=>{
 
 
     app.post("/edicoes", (req, res)=>{
+        console.log(req.body);
         var nome = req.body.nome;
         var pag = req.body.nome.replaceAll(" ", "_")
         var texto = req.body.edicoes;
