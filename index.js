@@ -207,7 +207,7 @@ var quebraspace = (texto)=>{
         //console.log("testando123");
         //var dehora = datenow();
         //console.log("dehora : " + dehora);
-        compra = dehora + "\n" + compra +"\n\n";
+        compra = " \n" + dehora + "\n" + compra +"\n";
         
         //console.log(diretorio);
 
@@ -353,8 +353,8 @@ var quebraspace = (texto)=>{
         compra = -1.0 * compra;
         if(!isNaN(compra)){
             console.log("erro if ")
-            if(data!==nome)arquivos.appendFile(diretorio + data, "PAGAMENTO: de " + nome + " valor: " + (-1.0*compra).toFixed(2) +"\n", ()=>{console.log("pagamento em: " +diretorio+data)});
-            compra = "\n"+ dehora + "\n---pagamento de: " + compra.toFixed(2) +   + "\n";
+            if(data!==nome)arquivos.appendFile(diretorio + data, "PAGAMENTO: de " + nome + " valor: " + (-1.0*compra).toFixed(2) + "\n", ()=>{console.log("pagamento em: " +diretorio+data)});
+            compra = "\n"+ dehora + `\n---pagamento de: ${compra.toFixed(2)} \n`;
         
             console.log(diretorio);
         
@@ -452,6 +452,7 @@ var quebraspace = (texto)=>{
                 console.log(ldados);
                 console.log(nome);
                 res.render('fendaateu.ejs', {ldados:ldados, nome:nome});
+
             }catch{
                 res.render("fendaateu.ejs", {ldados:ldados, nome:nome},)
             }
@@ -460,6 +461,21 @@ var quebraspace = (texto)=>{
         
     });
 
+    app.get('/fetchControle', (req,res) =>{
+        var valores;
+        var nome;
+        console.log('teste')
+        nome = false;
+        arquivos.readFile(diretorio+dcontrole, "utf8", (err,data)=>{
+            try{
+                res.json(data);
+            }catch{
+                res.render("fendaateu.ejs", {ldados:ldados, nome:nome},)
+            }
+        });
+        
+        
+    });
     app.get("/addCliente.ejs", (req,res)=>{
         //console.log("hello");
         res.render("addCliente.ejs");
@@ -503,17 +519,112 @@ var quebraspace = (texto)=>{
 
 
     app.post('/fetch', (req,res)=>{
-        console.log(req.body);
+        //console.log(req.body);
         var {name} = req.body;
-        console.log(name)
+        //console.log(name)
         arquivos.readFile(diretorio + name, "utf8", (err,data)=>{
-            console.log(data);
+            //console.log(data);
             setTimeout(() => {
                 //dataJSON.data = "MarcioAbreu"
                 res.json({data: data, name: name});
                 //console.log(typeof(dataJSON));
-            }, 1000);
+            }, 200);
         })
     })
+    app.post('/API/edicoes', (req,res)=>{
+        //console.log(req.body);
+        res.json(req.body);
+    })
+    
+    app.post("/fetchCompra", (req,res)=>{
+        console.log(req.body);
+        var d;
+        d = new Date();
+        var hora = d.getHours() + ":" + d.getMinutes();
+        var data = getDMY();
+        var dehora = data +" "+ hora;
+        var compra = req.body.compra;
+        var nome = req.body.name;
+        compra = " \n" + dehora + "\n" + compra +"\n";
+        
+        //console.log(diretorio);
 
+        if(data!==nome){
+            arquivos.appendFile(diretorio + data + '-fiado', "ANOTADO: para #link" + nome + "#link\n"+ compra + "\n", ()=>{});
+
+        }
+        console.log('ESTE CONSOLE', 'dir',diretorio, 'nome', nome,'compra', compra);
+        arquivos.appendFile(diretorio + nome, compra, (err) => {
+            if (err) {
+                console.error('Erro ao escrever no arquivo', err);
+                return res.status(500).json({ error: 'Erro ao escrever no arquivo' });
+            }
+        
+            // Após a escrita, ler o conteúdo do arquivo
+            arquivos.readFile(diretorio + nome, 'utf8', (err, data) => {
+                if (err) {
+                    console.error('Erro ao ler o arquivo', err);
+                    return res.status(500).json({ error: 'Erro ao ler o arquivo' });
+                }
+        
+                // Retornar o conteúdo do arquivo
+                console.log('Arquivo atualizado:', data);
+                res.json({ conteudo: data });
+            });
+        });
+    })
+
+    app.post('/editLine', (req, res)=>{
+        // console.log(req.body);
+        editFileLine(req, res);
+        // res.json({msg: 'Editando Linhas'});
+    })
+
+
+    const fs = require('fs');
+    const path = require('path');
+
+function editFileLine(req, res) {
+    const { fileName, lineText, lineNumber } = req.body;
+    console.log('REQ.BODY', req.body)
+    if (!fileName || lineNumber === undefined) {
+        return res.status(400).json({ error: "Parâmetros 'fileName', 'lineText' e 'lineNumber' são necessários." });
+    }
+
+    const absolutePath = diretorio + req.body.fileName;
+
+    fs.readFile(absolutePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: `Erro ao ler o arquivo: ${err.message}` });
+        }
+
+        // Dividir o conteúdo do arquivo em um array de linhas
+        const lines = data.split('\n');
+
+        // Verificar se a linha especificada existe
+        if (lineNumber < 0 || lineNumber >= lines.length) {
+            return res.status(400).json({ error: "O número da linha está fora do intervalo." });
+        }
+
+        // Atualizar a linha específica
+        lineText==='' ? lines[lineNumber] = 'chubaka' : lines[lineNumber] = lineText;
+
+        // Juntar as linhas novamente em uma string
+        const updatedContent = lines.join('\n');
+
+        // Escrever o conteúdo atualizado de volta ao arquivo
+        console.log('PATH: ', absolutePath, 'DATA: ', updatedContent);
+        fs.writeFile(absolutePath, updatedContent, 'utf8', (err) => {
+            if (err) {
+                return res.status(500).json({ error: `Erro ao salvar o arquivo: ${err.message}` });
+            }
+
+            res.json({ message: "Linha editada com sucesso!" });
+        });
+    });
 }
+
+module.exports = editFileLine;
+
+}   
+
