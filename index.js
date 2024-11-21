@@ -329,7 +329,10 @@ var quebraspace = (texto)=>{
         
         
     })
+
+    // req.body = { pagamento, nome, typeConnection? }
     app.post("/realpagamento", (req,res)=>{
+        console.log(req.body);
         var d;
         d = new Date();
         var compra = req.body.pagamento;
@@ -359,9 +362,13 @@ var quebraspace = (texto)=>{
             console.log(diretorio);
         
             //if(data!==nome)arquivos.appendFile(diretorio + data, "PAGAMENTO: de " + nome + "\n"+ compra, ()=>{console.log("pagamento em: " +diretorio+data)});
-            arquivos.appendFile(diretorio + nome, compra, ()=>{console.log('pagamento recebido')});
-            
-            res.redirect("cliente/" + pag);
+            arquivos.appendFile(diretorio + nome, compra, ()=>{
+                console.log('pagamento recebido')
+            });
+            if(req.body.typeConnection){
+                res.json({msg: 'Pagamento Realizado!', clientsUpdate: [data, nome]});
+            }
+            else res.redirect("cliente/" + pag);
 
         }else{
             erro = "Valor Incompreensivel. Digite o numero Corretamente";
@@ -607,7 +614,7 @@ function editFileLine(req, res) {
         }
 
         // Atualizar a linha específica
-        lineText==='' ? lines[lineNumber] = 'chubaka' : lines[lineNumber] = lineText;
+        lineText==='' ? lines[lineNumber] = '' : lines[lineNumber] = lineText;
 
         // Juntar as linhas novamente em uma string
         const updatedContent = lines.join('\n');
@@ -623,8 +630,83 @@ function editFileLine(req, res) {
         });
     });
 }
+app.post("/salvarclienteFetch",(req,res)=>{
+    var novocliente = req.body.nome;
+    //var cpf = req.body.cpf;
+    var controle;
+    arquivos.readFile(diretorio+dcontrole,'utf8',(err,data)=>{
+        try {
+            console.log("1")
+            controle = data;
+            console.log("2")
+            controle = controle.replaceAll("\r", "\n");
+            console.log("3")
+            controle = controle.split("\n");
+            console.log("4")
+            var existe =  false;
+            console.log("novocliente : "+novocliente+"tam : "+controle.length)
 
+            for(var i =0; i<controle.length; i++){
+                if(controle[i] === novocliente){
+                    existe = true;
+                    i = controle.length;
+                }
+                
+                console.log("for")
+            }
+            if(!existe){
+                
+                console.log("antes for : " +diretorio+dcontrole+ " " + novocliente)
+                arquivos.appendFile(diretorio+dcontrole, novocliente+"\n\n", (err)=>{
+                    arquivos.writeFile(diretorio+novocliente, "criacão", ()=>{
+                        // novocliente = novocliente.replaceAll(" ", "_");
+                        // res.redirect("cliente/" + novocliente);
+                        res.json({client: novocliente, msg: 'CADASTRADO COM SUCESSO'})
+                    })
+                    if(err)console.log("algo deu erado");
+                });
+                
+                
+            }
+            else{
+                console.log("2")
+                msg = "Cliente " + novocliente +" já Cadastrado";
+                res.json({msg: 'Adicionado com Sucesso!!'});
+            } 
+        } catch (error) {
+            arquivos.writeFile(diretorio+dcontrole, novocliente+"\n\n", ()=>{
+                console.log("novocliente : " + novocliente)
+                arquivos.writeFile(diretorio+novocliente, "criacão", ()=>{
+                    novocliente = novocliente.replaceAll(" ", "_");
+                    res.redirect("cliente/" + novocliente);
+                })
+
+            })
+            
+        }
+        
+    })
+})
 module.exports = editFileLine;
 
 }   
 
+const fs = require('fs');
+const path = require('path');
+
+function renameFile(diretorio, nomeAntigo, nomeNovo) {
+  const caminhoAntigo = path.join(diretorio, nomeAntigo);
+  const caminhoNovo = path.join(diretorio, nomeNovo);
+
+  fs.rename(caminhoAntigo, caminhoNovo, (erro) => {
+    if (erro) {
+      console.error('Erro ao renomear o arquivo:', erro);
+    } else {
+      console.log(`Arquivo renomeado com sucesso para ${nomeNovo}`);
+    }
+  });
+}
+
+app.post('/rename', (req, res) => {
+    
+})
